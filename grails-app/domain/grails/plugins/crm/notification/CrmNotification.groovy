@@ -22,14 +22,20 @@ import org.apache.commons.lang.StringUtils
 
 class CrmNotification {
 
+    public static final int PRIORITY_LOW = -1
+    public static final int PRIORITY_NORMAL = 0
+    public static final int PRIORITY_HIGH = 1
+
+    Date dateCreated
     Long tenantId
     String username
     String body
-    Date dateCreated
+    int priority
+    boolean read
 
     static constraints = {
         tenantId(nullable: true)
-        username(maxSize: 80, nullable: true)
+        username(maxSize: 80, blank: false)
         body(maxSize: 2000, blank: false)
     }
 

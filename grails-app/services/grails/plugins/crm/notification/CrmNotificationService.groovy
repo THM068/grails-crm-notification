@@ -25,19 +25,55 @@ class CrmNotificationService {
 
     @Listener(namespace = "crm", topic = "notify")
     def notify(event) {
-        new CrmNotification(tenantId: event.tenant, username: event.username, payload: event).save(failOnError: true)
+        new CrmNotification(tenantId: event.tenant, username: event.username, priority: event.priority ?: 0, payload: event).save(failOnError: true)
     }
 
-    List<CrmNotification> getNotifications(String username = null, Long tenant = null, Map orderParams = [:]) {
+    List<CrmNotification> getNotifications(String username, Long tenant = null, Map orderParams = [:]) {
         CrmNotification.createCriteria().list(orderParams) {
-            if(username) {
-                eq('username', username)
-            }
+            eq('username', username)
             if (tenant != null) {
                 eq('tenantId', tenant)
             } else {
                 isNull('tenantId')
             }
         }
+    }
+
+    List<CrmNotification> getUnreadNotifications(String username, Long tenant = null, Map orderParams = [:]) {
+        CrmNotification.createCriteria().list(orderParams) {
+            eq('username', username)
+            if (tenant != null) {
+                eq('tenantId', tenant)
+            } else {
+                isNull('tenantId')
+            }
+            eq('read', false)
+        }
+    }
+
+    int countUnreadNotifications(String username, Long tenant = null) {
+        CrmNotification.createCriteria().count() {
+            eq('username', username)
+            if (tenant != null) {
+                eq('tenantId', tenant)
+            } else {
+                isNull('tenantId')
+            }
+            eq('read', false)
+        }
+    }
+
+    void markAsRead(CrmNotification arg) {
+        arg.read = true
+        arg.save()
+    }
+
+    void markAsUnRead(CrmNotification arg) {
+        arg.read = false
+        arg.save()
+    }
+
+    void delete(CrmNotification arg) {
+        arg.delete()
     }
 }

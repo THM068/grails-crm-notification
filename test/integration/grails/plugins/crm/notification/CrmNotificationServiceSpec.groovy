@@ -33,6 +33,18 @@ class CrmNotificationServiceSpec extends grails.plugin.spock.IntegrationSpec {
         Thread.sleep(2000L)
 
         then: "event consumed by crmNotificationService"
-        crmNotificationService.getNotifications('test', 42L).size() == 1
+        crmNotificationService.countUnreadNotifications('test', 42L) == 1
+
+        when: "notification marked as read"
+        crmNotificationService.markAsRead(crmNotificationService.getUnreadNotifications('test', 42L).find{it})
+
+        then: "no more unread notifications"
+        crmNotificationService.countUnreadNotifications('test', 42L) == 0
+
+        when: "mark it as unread"
+        crmNotificationService.markAsUnRead(crmNotificationService.getNotifications('test', 42L).find{it})
+
+        then: "one unread notification again"
+        crmNotificationService.countUnreadNotifications('test', 42L) == 1
     }
 }
