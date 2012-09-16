@@ -20,7 +20,7 @@ import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import org.apache.commons.lang.StringUtils
 
-class CrmNotification {
+class CrmNotification implements Serializable {
 
     public static final int PRIORITY_LOW = -1
     public static final int PRIORITY_NORMAL = 0

@@ -47,7 +47,7 @@ class CrmNotificationController {
             return
         }
         def tombstone = n.toString()
-        n.delete(flush: true)
+        crmNotificationService.delete(n)
 
         def count = crmNotificationService.countUnreadNotifications(username, TenantUtils.tenant)
         def json = [success: true, count: count, message: "Deleted $tombstone"]

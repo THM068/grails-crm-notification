@@ -28,7 +28,6 @@ grails.project.dependency.resolution = {
         test(":spock:0.6") { export = false }
 
         compile(":platform-core:1.0.M6") { excludes 'resources' }
-
         compile "grails.crm:crm-core:latest.integration"
     }
 }
