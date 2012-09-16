@@ -25,7 +25,15 @@ class CrmNotificationService {
 
     @Listener(namespace = "crm", topic = "notify")
     def notify(event) {
-        new CrmNotification(tenantId: event.tenant, username: event.username, priority: event.priority ?: 0, payload: event).save(failOnError: true)
+        def subject = event.remove('subject')
+        if (! subject) {
+            subject = event.remove('title')
+            if (! subject) {
+                subject = "<no subject>"
+            }
+        }
+        new CrmNotification(tenantId: event.remove('tenant'), username: event.remove('username'),
+                subject: subject, priority: event.remove('priority') ?: 0, payload: event).save(failOnError: true)
     }
 
     List<CrmNotification> getNotifications(String username, Long tenant = null, Map orderParams = [:]) {

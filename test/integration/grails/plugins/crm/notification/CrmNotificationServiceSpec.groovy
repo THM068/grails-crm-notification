@@ -29,7 +29,7 @@ class CrmNotificationServiceSpec extends grails.plugin.spock.IntegrationSpec {
     def "send notification event and make sure it got persisted"() {
 
         when: "notification is sent"
-        grailsEventsPublisher.event(new EventMessage("notify", [tenant: 42L, username: "test", msg: "Hello World"], "crm", true))
+        grailsEventsPublisher.event(new EventMessage("notify", [tenant: 42L, username: "test", subject: "Hello World"], "crm", true))
         Thread.sleep(2000L)
 
         then: "event consumed by crmNotificationService"
@@ -46,5 +46,11 @@ class CrmNotificationServiceSpec extends grails.plugin.spock.IntegrationSpec {
 
         then: "one unread notification again"
         crmNotificationService.countUnreadNotifications('test', 42L) == 1
+
+        when: "notification is deleted"
+        crmNotificationService.delete(crmNotificationService.getNotifications('test', 42L).find{it})
+
+        then: "no more notifications"
+        crmNotificationService.getNotifications('test', 42L).isEmpty()
     }
 }

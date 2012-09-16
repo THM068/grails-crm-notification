@@ -23,6 +23,18 @@ class CrmNotificationTagLib {
     def crmNotificationService
     def crmSecurityService
 
+    def hasUnreadNotifications = {attrs, body ->
+        def username = attrs.username ?: crmSecurityService.currentUser?.username
+        if (!username) {
+            return
+        }
+        def tenant = attrs.long('tenant')
+        def count = crmNotificationService.countUnreadNotifications(username, tenant)
+        if (count > 0) {
+            out << body([count:count])
+        }
+    }
+
     def eachNotification = {attrs, body ->
         def username = attrs.username ?: crmSecurityService.currentUser?.username
         if (!username) {

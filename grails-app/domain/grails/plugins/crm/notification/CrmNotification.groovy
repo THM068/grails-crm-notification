@@ -29,6 +29,7 @@ class CrmNotification {
     Date dateCreated
     Long tenantId
     String username
+    String subject
     String body
     int priority
     boolean read
@@ -36,6 +37,7 @@ class CrmNotification {
     static constraints = {
         tenantId(nullable: true)
         username(maxSize: 80, blank: false)
+        subject(maxSize: 255, blank: false)
         body(maxSize: 2000, blank: false)
     }
 
@@ -59,6 +61,6 @@ class CrmNotification {
     }
 
     String toString() {
-        "${dateCreated?.format("yyyy-MM-dd HH:mm:ss")} $username@$tenantId".toString()
+        "${dateCreated?.format("yyyy-MM-dd HH:mm:ss")} $subject".toString()
     }
 }
