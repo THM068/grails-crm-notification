@@ -55,7 +55,7 @@ class CrmNotificationService {
             } else {
                 isNull('tenantId')
             }
-            eq('read', false)
+            eq('viewed', false)
         }
     }
 
@@ -67,17 +67,17 @@ class CrmNotificationService {
             } else {
                 isNull('tenantId')
             }
-            eq('read', false)
+            eq('viewed', false)
         }
     }
 
     void markAsRead(CrmNotification arg) {
-        arg.read = true
+        arg.viewed = true
         arg.save()
     }
 
     void markAsUnRead(CrmNotification arg) {
-        arg.read = false
+        arg.viewed = false
         arg.save()
     }
 

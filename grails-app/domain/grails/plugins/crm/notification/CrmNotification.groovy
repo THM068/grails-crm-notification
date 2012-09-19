@@ -32,7 +32,7 @@ class CrmNotification implements Serializable {
     String subject
     String body
     int priority
-    boolean read
+    boolean viewed
 
     static constraints = {
         tenantId(nullable: true)
