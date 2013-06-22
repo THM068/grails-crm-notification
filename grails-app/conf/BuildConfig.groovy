@@ -10,24 +10,63 @@ grails.project.dependency.resolution = {
     }
     log "warn"
     repositories {
+        grailsHome()
         grailsCentral()
         mavenRepo "http://labs.technipelago.se/repo/crm-releases-local/"
-        mavenRepo "http://labs.technipelago.se/repo/plugin-releases-local/"
+        //mavenRepo "http://labs.technipelago.se/repo/plugin-releases-local/"
     }
     dependencies {
+        //test "org.spockframework:spock-grails-support:0.7-groovy-2.0"
     }
 
     plugins {
         build(":tomcat:$grailsVersion",
-              ":hibernate:$grailsVersion",
-              ":release:2.0.4",
-              ":rest-client-builder:1.0.2") {
+                ":release:2.2.1") {
+            export = false
+        }
+        runtime(":hibernate:$grailsVersion") {
             export = false
         }
 
-        test(":spock:0.6") { export = false }
+        test(":spock:0.7") {
+            export = false
+            //exclude "spock-grails-support"
+        }
+        test(":codenarc:0.18.1") { export = false }
+        test(":code-coverage:1.2.6") { export = false }
 
-        compile(":platform-core:1.0.M6") { excludes 'resources' }
+        compile(":platform-core:1.0.RC5") { excludes 'resources' }
+
         compile "grails.crm:crm-core:latest.integration"
     }
 }
+
+codenarc {
+    reports = {
+        CrmXmlReport('xml') {
+            outputFile = 'target/test-reports/CodeNarcReport.xml'
+            title = 'Grails CRM CodeNarc Report'
+        }
+        CrmHtmlReport('html') {
+            outputFile = 'target/test-reports/CodeNarcReport.html'
+            title = 'Grails CRM CodeNarc Report'
+
+        }
+    }
+    properties = {
+        GrailsPublicControllerMethod.enabled = false
+        CatchException.enabled = false
+        CatchThrowable.enabled = false
+        ThrowException.enabled = false
+        ThrowRuntimeException.enabled = false
+        GrailsStatelessService.enabled = false
+        GrailsStatelessService.ignoreFieldNames="dataSource,scope,sessionFactory,transactional,*Service,messageSource,grailsApplication,applicationContext,expose"
+    }
+    processTestUnit = false
+    processTestIntegration = false
+}
+
+coverage {
+    exclusions = ['**/radar/**']
+}
+
