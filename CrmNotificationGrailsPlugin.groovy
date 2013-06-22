@@ -16,9 +16,10 @@
 
 class CrmNotificationGrailsPlugin {
     def groupId = "grails.crm"
-    def version = "1.0-SNAPSHOT"
+    def version = "1.1.0"
     def grailsVersion = "2.0 > *"
     def dependsOn = [:]
+    def loadAfter = ['crmCore']
     def pluginExcludes = [
             "grails-app/views/error.gsp",
             "grails-app/services/grails/plugins/crm/core/TestSecurityService.groovy"
@@ -32,31 +33,4 @@ class CrmNotificationGrailsPlugin {
     def organization = [name: "Technipelago AB", url: "http://www.technipelago.se/"]
     def issueManagement = [system: "github", url: "https://github.com/goeh/grails-crm-notification/issues"]
     def scm = [url: "https://github.com/goeh/grails-crm-notification"]
-
-    def doWithSpring = {
-        // TODO Implement runtime spring config (optional)
-    }
-
-    def doWithDynamicMethods = { ctx ->
-        // TODO Implement registering dynamic methods to classes (optional)
-    }
-
-    def doWithApplicationContext = { applicationContext ->
-        // TODO Implement post initialization spring config (optional)
-    }
-
-    def onChange = { event ->
-        // TODO Implement code that is executed when any artefact that this plugin is
-        // watching is modified and reloaded. The event contains: event.source,
-        // event.application, event.manager, event.ctx, and event.plugin.
-    }
-
-    def onConfigChange = { event ->
-        // TODO Implement code that is executed when the project configuration changes.
-        // The event is the same as for 'onChange'.
-    }
-
-    def onShutdown = { event ->
-        // TODO Implement code that is executed when the application shuts down (optional)
-    }
 }
