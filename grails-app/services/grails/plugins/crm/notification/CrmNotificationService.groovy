@@ -17,6 +17,7 @@
 package grails.plugins.crm.notification
 
 import grails.events.Listener
+import groovy.transform.CompileStatic
 
 /**
  * Grails CRM Notification Center.
@@ -36,7 +37,7 @@ class CrmNotificationService {
                 subject: subject, priority: event.remove('priority') ?: 0, payload: event).save(failOnError: true)
     }
 
-    List<CrmNotification> getNotifications(String username, Long tenant = null, Map orderParams = [:]) {
+    List<CrmNotification> getNotifications(final String username, Long tenant = null, Map orderParams = [:]) {
         CrmNotification.createCriteria().list(orderParams) {
             eq('username', username)
             if (tenant != null) {
@@ -47,7 +48,7 @@ class CrmNotificationService {
         }
     }
 
-    List<CrmNotification> getUnreadNotifications(String username, Long tenant = null, Map orderParams = [:]) {
+    List<CrmNotification> getUnreadNotifications(final String username, Long tenant = null, Map orderParams = [:]) {
         CrmNotification.createCriteria().list(orderParams) {
             eq('username', username)
             if (tenant != null) {
@@ -59,7 +60,7 @@ class CrmNotificationService {
         }
     }
 
-    int countUnreadNotifications(String username, Long tenant = null) {
+    int countUnreadNotifications(final String username, Long tenant = null) {
         CrmNotification.createCriteria().count() {
             eq('username', username)
             if (tenant != null) {
@@ -71,17 +72,20 @@ class CrmNotificationService {
         }
     }
 
-    void markAsRead(CrmNotification arg) {
+    @CompileStatic
+    void markAsRead(final CrmNotification arg) {
         arg.viewed = true
         arg.save()
     }
 
-    void markAsUnRead(CrmNotification arg) {
+    @CompileStatic
+    void markAsUnRead(final CrmNotification arg) {
         arg.viewed = false
         arg.save()
     }
 
-    void delete(CrmNotification arg) {
+    @CompileStatic
+    void delete(final CrmNotification arg) {
         arg.delete()
     }
 }
