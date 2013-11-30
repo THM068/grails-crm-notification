@@ -24,10 +24,10 @@ class CrmNotificationGrailsPlugin {
             "grails-app/views/error.gsp",
             "grails-app/services/grails/plugins/crm/core/TestSecurityService.groovy"
     ]
-    def title = "Grails CRM Notification Plugin"
+    def title = "GR8 CRM Notification Plugin"
     def author = "Goran Ehrsson"
     def authorEmail = "goran@technipelago.se"
-    def description = "Grails CRM Notification Service."
+    def description = "GR8 CRM Notification Service."
     def documentation = "https://github.com/goeh/grails-crm-notification"
     def license = "APACHE"
     def organization = [name: "Technipelago AB", url: "http://www.technipelago.se/"]
