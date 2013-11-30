@@ -1,8 +1,8 @@
-# Grails CRM
+# GR8 CRM
 
 CRM = [Customer Relationship Management](http://en.wikipedia.org/wiki/Customer_relationship_management)
 
-Grails CRM is a set of [Grails Web Application Framework](http://www.grails.org/)
+GR8 CRM is a set of [Grails Web Application Framework](http://www.grails.org/)
 plugins that makes it easy to develop web application with CRM functionality.
 With CRM we mean features like:
 
@@ -12,4 +12,4 @@ With CRM we mean features like:
 
 #Notification Center
 
-This plugin is the central notification service in Grails CRM.
+This plugin is the central notification service in GR8 CRM.
